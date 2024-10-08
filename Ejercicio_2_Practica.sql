@@ -152,3 +152,29 @@ INSERT INTO profesor (nombre, apellido, correo_id, lugar_residencia_id, profesio
 ('Alex','Lopez', 5, 1, 3, 3, 1, 1),
 ('Fernando','Martinez', 6, 2, 4, 2, 1, 2),
 ('Sandra','Navarro', 7, 3, 2, 4, 2, 3);
+
+SELECT alumno.nombres
+	 , alumno.apellidos
+	 , correo.desc_correo
+	 , lugar_residencia.ciudad
+	 , profesion.desc_profesion
+	 , sexo.descripcion_sexo
+	 , CASE 
+        	WHEN edad.de_12_18_años = 1 THEN '12-18 años'
+        	WHEN edad.de_18_30_años = 1 THEN '18-30 años'
+        	WHEN edad.de_30_40_años = 1 THEN '30-40 años'
+        	WHEN edad.de_50_60_años = 1 THEN '50-60 años'
+        	ELSE 'Rango no definido'
+    	END AS rango_edad
+FROM alumno alumno
+
+JOIN correo
+  ON alumno.alumno_id = correo.correo_id
+JOIN lugar_residencia
+  ON alumno.alumno_id = lugar_residencia.lugar_residencia_id  
+JOIN profesion
+  ON alumno.alumno_id = profesion.profesion_id  
+JOIN edad
+  ON alumno.alumno_id = edad.edad_id  
+JOIN sexo
+  ON alumno.alumno_id = sexo.sexo_id  
